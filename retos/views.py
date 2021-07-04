@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.urls import reverse
 # Create your views here.
 
 
@@ -19,14 +20,30 @@ nuestros_retos_mensuales = {
 }
 
 
+def index(request):
+    lista_de_items = ""
+    meses = list(nuestros_retos_mensuales.keys())
+    for mes in meses:
+        mes_en_mayuscula = mes.capitalize()
+        ruta = reverse("retos-mensuales", args=[mes])
+        lista_de_items += f"<li><a href =\"{ruta}\"> {mes_en_mayuscula} </a> </li>"
+    respuesta = f"<ul>{lista_de_items}</ul>"
+    return HttpResponse(respuesta)
+
+
 def retos_mensuales_por_numero(request, mes):
-    reto = "Reto #" + str(mes)
-    return HttpResponse(reto)
+    meses = list(nuestros_retos_mensuales.keys())
+    if mes > len(meses):
+        return HttpResponseNotFound("Este mes no es valido")
+    mes_desde_numero = meses[mes-1]
+    redirect_path = reverse("retos-mensuales", args=[mes_desde_numero])
+    return HttpResponseRedirect(redirect_path)
 
 
 def retos_mensuales(request, mes):
     try:
         reto = nuestros_retos_mensuales[mes]
-        return HttpResponse(reto)
+        respuesta = f"<h1>{reto}</h1>"
+        return HttpResponse(respuesta)
     except:
-        return HttpResponse("Este mes no es valido")
+        return HttpResponseNotFound("Este mes no es valido")
