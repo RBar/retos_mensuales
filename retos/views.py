@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
+from django.template.loader import render_to_string  # cambiado
 # Create your views here.
 
 
@@ -43,7 +44,8 @@ def retos_mensuales_por_numero(request, mes):
 def retos_mensuales(request, mes):
     try:
         reto = nuestros_retos_mensuales[mes]
-        respuesta = f"<h1>{reto}</h1>"
-        return HttpResponse(respuesta)
+        return render(request, "retos/retos.html")
+        # respuesta = render_to_string("retos/retos.html")  # Cambiado
+        # return HttpResponse(respuesta)
     except:
         return HttpResponseNotFound("Este mes no es valido")
