@@ -17,19 +17,23 @@ nuestros_retos_mensuales = {
     "septiembre": "Reto #9",
     "octubre": "Reto #10",
     "noviembre": "Reto #11",
-    "diciembre": "Reto #12",
+    "diciembre": None,
 }
 
 
 def index(request):
     lista_de_items = ""
     meses = list(nuestros_retos_mensuales.keys())
-    for mes in meses:
-        mes_en_mayuscula = mes.capitalize()
-        ruta = reverse("retos-mensuales", args=[mes])
-        lista_de_items += f"<li><a href =\"{ruta}\"> {mes_en_mayuscula} </a> </li>"
-    respuesta = f"<ul>{lista_de_items}</ul>"
-    return HttpResponse(respuesta)
+    return render(request, "retos/index.html", {
+        "meses": meses
+    })
+    # for mes in meses:
+    #     mes_en_mayuscula = mes.capitalize()
+    #     ruta = reverse("retos-mensuales", args=[mes])
+    #     lista_de_items += f"<li><a href =\"{ruta}\"> {mes_en_mayuscula} </a> </li>"
+    # respuesta = f"<ul>{lista_de_items}</ul>"
+    # return HttpResponse(respuesta)
+    # return render(request, "retos/index.html")
 
 
 def retos_mensuales_por_numero(request, mes):
@@ -44,7 +48,10 @@ def retos_mensuales_por_numero(request, mes):
 def retos_mensuales(request, mes):
     try:
         reto = nuestros_retos_mensuales[mes]
-        return render(request, "retos/retos.html")
+        return render(request, "retos/retos.html", {
+            "texto": reto,
+            "mes": mes
+        })
         # respuesta = render_to_string("retos/retos.html")  # Cambiado
         # return HttpResponse(respuesta)
     except:
