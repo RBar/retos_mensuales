@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.template.loader import render_to_string  # cambiado
 # Create your views here.
@@ -52,7 +52,5 @@ def retos_mensuales(request, mes):
             "texto": reto,
             "mes": mes
         })
-        # respuesta = render_to_string("retos/retos.html")  # Cambiado
-        # return HttpResponse(respuesta)
     except:
-        return HttpResponseNotFound("Este mes no es valido")
+        raise Http404()

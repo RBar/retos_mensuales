@@ -1,10 +1,21 @@
 {% extends "base.html" %}
 <!--  -->
+{% load static %}
+<!--  -->
 {% block titulo_pagina %} Lista de Meses {% endblock %}
+<!--  -->
+{% block archivo_css %}
+<!--  -->
+<link rel="stylesheet" href="{% static 'retos/retos.css' %}">
+<!--  -->
+{% endblock %}
+
 <!--  -->
 {% block contenido %}
 <!--  -->
 <ul>
+    {% include "retos/includes/header.html" %}
+    <!--  -->
     {% for mes in meses %}
     <li><a href="{% url 'retos-mensuales' mes=mes %}">{{mes|title}}</a></li>
     {% endfor %}
