@@ -13,8 +13,8 @@
 <!--  -->
 {% block contenido %}
 <!--  -->
+{% include "retos/includes/header.html" %}
 <ul>
-    {% include "retos/includes/header.html" %}
     <!--  -->
     {% for mes in meses %}
     <li><a href="{% url 'retos-mensuales' mes=mes %}">{{mes|title}}</a></li>
