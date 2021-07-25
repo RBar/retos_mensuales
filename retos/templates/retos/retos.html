@@ -1,4 +1,13 @@
-{% extends "base.html" %}
+ {% extends "base.html" %}
+<!--  -->
+{% load static %}
+<!--  -->
+{% block archivo_css %}
+<!--  -->
+<link rel="stylesheet" href="{% static 'retos/reto.css' %}">
+<link rel="stylesheet" href="{% static 'retos/includes/header.css' %}">
+<!--  -->
+{% endblock %}
 <!--  -->
 {% block titulo_pagina %} Reto de {{mes|title}} {% endblock %}
 <!--  -->
